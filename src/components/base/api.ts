@@ -5,6 +5,8 @@ export type ApiListResponse<Type> = {
 
 export type ApiPostMethods = 'POST' | 'PUT' | 'DELETE';
 
+//test commit
+
 export class Api {
     readonly baseUrl: string;
     protected options: RequestInit;

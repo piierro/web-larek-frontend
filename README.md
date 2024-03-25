@@ -7,11 +7,13 @@ https://github.com/piierro/web-larek-frontend.git
 ## Установка и запуск
 Для установки и запуска проекта необходимо выполнить команды
 
-
+```
 npm install
 npm run start
+```
 
 ## Сборка
 
-
+```
 npm run build
+```

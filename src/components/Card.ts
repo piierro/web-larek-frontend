@@ -21,7 +21,6 @@ export class Card extends Component<ICard>  {
     protected _button?: HTMLButtonElement;
     protected _category: HTMLElement;
     protected _price: HTMLElement;
-    protected _index: HTMLElement;
 
     constructor(container: HTMLElement, actions?: ICardActions) {
         super(container);
@@ -32,7 +31,6 @@ export class Card extends Component<ICard>  {
 		this._category = container.querySelector('.card__category');
 		this._price = ensureElement<HTMLElement>('.card__price', container);
 		this._button = container.querySelector('.card__button');
-		this._index = container.querySelector('.basket__item-index');
         if (actions?.onClick) {
             if (this._button) {
                 this._button.addEventListener('click', actions.onClick);
@@ -44,9 +42,6 @@ export class Card extends Component<ICard>  {
     
     set id(value: string) {
         this.container.dataset.id = value;
-    }
-    get id(): string {
-        return this.container.dataset.id || '';
     }
     
     set title(value: string) {
@@ -65,27 +60,24 @@ export class Card extends Component<ICard>  {
     }
     
     set category(value: string) {
-		// if (value === 'софт-скил') {
-		// 	this._category.classList.add('card__category_soft');
-		// } else if (value === 'другое') {
-        //     this._category.classList.add('card__category_hard');
-		// } else if (value === 'дополнительно') {
-        //     this._category.classList.add('card__category_other')
-		// } else if (value === 'кнопка') {
-		// 	this._category.classList.add('card__category_button');
-		// } else if (value === 'хард-скил') {
-		// 	this._category.classList.add('card__category_optional');
-		// }
-		this.setText(this._category, value);
+        this.setText(this._category, value);
+          if (value === 'софт-скил') {
+         this._category.classList.add('card__category_soft');
+        } else if (value === 'другое') {
+            this._category.classList.add('card__category_other');
+        } else if (value === 'дополнительное') {
+            this._category.classList.add('card__category_additional')
+        } else if (value === 'кнопка') {
+         this._category.classList.add('card__category_button');
+        } else if (value === 'хард-скил') {
+         this._category.classList.add('card__category_hard');
+        }
 	}
 
     set price(value: number | null) {
         value === null ? this.setText(this._price, 'Бесценно') : this.setText(this._price, `${value.toString()} синапсов`);
     }
-    set button(value: string) {
-        this.setText(this._button, value);
-    }
-    set index(value: string) {
-		this._index.textContent = value;
-	}
+    // set button(value: string) {
+    //     this.setText(this._button, value);
+    // }
 }

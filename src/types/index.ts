@@ -7,8 +7,6 @@ export interface IProductItem {
 	price: number | null;
 }
 
-// type PaymentMethod = 'online' | 'offline';
-
 export type IBasketItem = Pick<IProductItem , 'id' | 'title' | 'price'>;
 
 export interface IAppState {
@@ -21,7 +19,7 @@ export interface IOrderForm {
     email: string;
 	phone: string;
     address: string;
-    payment: null;
+    payment: string;
 }
 
 export interface IOrder extends IOrderForm {
@@ -31,7 +29,7 @@ export interface IOrder extends IOrderForm {
 
 export interface IOrderResult {
 	id: string;
-    total: number;
+    // total: number;
 }
 export interface IBasketData {
 	basket: IProductItem[];

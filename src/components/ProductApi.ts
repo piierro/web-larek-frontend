@@ -3,7 +3,7 @@ import { IProductItem, IOrder, IOrderResult } from '../types';
 
 export interface IProductAPI {
     getCardList: () => Promise<IProductItem []>; 
-    getCardItem: (id: string) => Promise<IProductItem>; 
+    // getCardItem: (id: string) => Promise<IProductItem>; 
     orderCards: (order: IOrder) => Promise<IOrderResult>;
 }
 
@@ -15,14 +15,14 @@ export class ProductAPI extends Api implements IProductAPI {
         this.cdn = cdn;
     }
 
-    getCardItem(id: string): Promise<IProductItem > {
-        return this.get(`/product/${id}`).then(
-            (item: IProductItem ) => ({
-                ...item,
-                image: this.cdn + item.image,
-            })
-        );
-    }
+    // getCardItem(id: string): Promise<IProductItem > {
+    //     return this.get(`/product/${id}`).then(
+    //         (item: IProductItem ) => ({
+    //             ...item,
+    //             image: this.cdn + item.image,
+    //         })
+    //     );
+    // }
 
     getCardList(): Promise<IProductItem[]> {
         return this.get('/product').then((data: ApiListResponse<IProductItem >) =>

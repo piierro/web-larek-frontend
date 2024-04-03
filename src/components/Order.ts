@@ -1,14 +1,9 @@
 import { IEvents, EventEmitter } from './base/events';
 import { Form } from './common/Form';
 import { ensureAllElements } from '../utils/utils';
-// import { IDeliveryForm, IContactForm  } from '../types';
+import { IOrderForm } from '../types';
 
-export interface IContactForm {
-	email: string;
-	phone: string;
-}
-
-export class Contacts extends Form<IContactForm > {
+export class Contacts extends Form<IOrderForm > {
   constructor(container: HTMLFormElement, events: EventEmitter) {
       super(container, events);
   }
@@ -22,12 +17,7 @@ export class Contacts extends Form<IContactForm > {
   }
 }
 
-export interface IDeliveryForm {
-	payment: string;
-	address: string;
-}
-
-export class Order extends Form<IDeliveryForm> {
+export class Order extends Form<IOrderForm> {
 	protected _buttons: HTMLButtonElement[];
 
 	constructor(container: HTMLFormElement, events: IEvents) {
@@ -36,9 +26,9 @@ export class Order extends Form<IDeliveryForm> {
 		this._buttons = ensureAllElements<HTMLButtonElement>('.button_alt', container);
 		this._buttons.forEach((button) => {
 			button.addEventListener('click', () => {
-				this.payment = button.name;
-				events.emit('payment:change', button);
-			});
+			this.payment = button.name;
+			events.emit('payment:change', button);
+		});
 		});
 	}
 

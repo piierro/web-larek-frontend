@@ -5,9 +5,9 @@ import { createElement, ensureElement } from '../../utils/utils';
 interface IBasketView {
     items: HTMLElement[];
     total: number;
+    selected: string[];
 }
 
- //класс хранящий всю корзину
 export class Basket extends Component<IBasketView> {
     protected _list: HTMLElement;
     protected _total: HTMLElement;
@@ -27,14 +27,22 @@ export class Basket extends Component<IBasketView> {
         }
         this.items = [];
     }
-
-    // Обновляет список товаров в корзине
+    
     set items(items: HTMLElement[]) {
-        this._list.innerHTML = '';
-        if (items.length > 0) {
-            this._list.append(...items);
+        if (items.length) {
+            this._list.replaceChildren(...items);
         } else {
-            this._list.append(createElement('p', 'Корзина пуста'));
+            this._list.replaceChildren(createElement<HTMLParagraphElement>('p', {
+                textContent: 'Корзина пуста'
+            }));
+        }
+    }
+
+    set selected(items: string[]) {
+        if (items.length) {
+            this.setDisabled(this._button, false);
+        } else {
+            this.setDisabled(this._button, true);
         }
     }
 

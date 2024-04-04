@@ -40,6 +40,7 @@ export class Order extends Form<IOrderForm> {
 				button.classList.remove('button_alt-active');
 			}
 		});
+		
 	}
 
 	set address(value: string) {

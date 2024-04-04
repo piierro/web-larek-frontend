@@ -23,7 +23,7 @@ export class AppState extends Model<IAppState> {
     phone: '',
     items: [],
     payment: '',
-    total: null,
+    total: 0,
     address: ''
   };
     
@@ -44,17 +44,25 @@ export class AppState extends Model<IAppState> {
 
   addToBasket(item: ProductItem) {
     this.basket.push(item);
+    this.order.items.push(item.id);
+    this.order.total = this.order.total + item.price;
     this.emitChanges('basket:changed');
-    // this.emitChanges('counter:changed', this.basket);
   }
   removeFromBusket(item: ProductItem) {
     this.basket = this.basket.filter((element) => element != item);
+    this.order.items = this.order.items.filter((id: string) => item.id !== id);
+    this.order.total = this.order.total - item.price;
     this.emitChanges('basket:changed');
   }
 
   clearBasket() {
 		this.basket = [];
 		this.order.items = [];
+    this.order.address = '';
+    this.order.email = '';
+    this.order.payment = '';
+    this.order.phone = '';
+    this.order.total = 0;
 	}
   
   setContactField(field: keyof IOrderForm, value: string) {

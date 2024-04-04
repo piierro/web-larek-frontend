@@ -74,7 +74,7 @@ events.on('preview:changed', (item: ProductItem) => {
 
 // РАБОТА С КОРЗИНОЙ
 events.on('basket:open', () => {
-	// basket.selected = appData.order.items;
+	basket.selected = appData.order.items;
 	modal.render({
 		content: basket.render({
 			total: appData.getTotal()
@@ -87,7 +87,7 @@ events.on('basket:changed', () => {
 	const card = new Card(cloneTemplate(cardBasketModal), {
 	 onClick: () => {
 		appData.removeFromBusket(item);
-		// basket.selected = appData.order.items;
+		basket.selected = appData.order.items;
 		basket.total = appData.getTotal();
     }
 }); return card.render({
@@ -97,7 +97,6 @@ events.on('basket:changed', () => {
 });
 	page.counter = appData.basket.length;
     basket.total = appData.getTotal();
-	// basket.selected = appData.order.items; 
 });
 
 events.on('card:add', (item: ProductItem) => {
@@ -163,7 +162,7 @@ events.on('payment:change', (target: HTMLButtonElement) => {
 	appData.order.payment = target.name;
 });
 
-events.on('success:submit', () => {
+events.on('contacts:submit', () => {
     api.orderCards(appData.order)
         .then((result) => {
             const success = new Success(cloneTemplate(successTemplate), {

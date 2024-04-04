@@ -29,10 +29,10 @@ export interface IOrder extends IOrderForm {
 
 export interface IOrderResult {
 	id: string;
-    // total: number;
+    total: number;
 }
-export interface IBasketData {
-	basket: IProductItem[];
-}
+// export interface IBasketData {
+// 	basket: IProductItem[];
+// }
   
 export type FormErrors = Partial<Record<keyof IOrder, string>>;

@@ -57,13 +57,17 @@ export class AppState extends Model<IAppState> {
 
   clearBasket() {
 		this.basket = [];
-		this.order.items = [];
+    this.order.items = [];
+		this.emitChanges('basket:changed');
+	}
+
+  clearOrder() {
     this.order.address = '';
     this.order.email = '';
     this.order.payment = '';
     this.order.phone = '';
     this.order.total = 0;
-	}
+  }
   
   setContactField(field: keyof IOrderForm, value: string) {
 		this.order[field] = value;

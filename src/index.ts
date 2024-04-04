@@ -169,6 +169,7 @@ events.on('contacts:submit', () => {
                 onClick: () => {
                     modal.close();
                     appData.clearBasket();
+					appData.clearOrder();
 					page.counter = appData.basket.length;
                 }
             });

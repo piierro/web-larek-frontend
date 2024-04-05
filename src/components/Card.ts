@@ -1,20 +1,7 @@
 import { Component } from './base/Component';
 import { ensureElement } from "../utils/utils";
-
-interface ICardActions {
-    onClick: (event: MouseEvent) => void;
-}
-
-export interface ICard{
-    title: string;
-	description: string | string[];
-	image: string;
-	category: string;
-	price: number;
-	button: HTMLButtonElement;
-}
-
-export class Card extends Component<ICard>  {
+import { ICardActions } from '../types';
+export class Card extends Component  {
     protected _title: HTMLElement;
     protected _image?: HTMLImageElement;
     protected _description?: HTMLElement;
@@ -30,7 +17,7 @@ export class Card extends Component<ICard>  {
 		this._image = container.querySelector('.card__image');
 		this._category = container.querySelector('.card__category');
 		this._price = ensureElement<HTMLElement>('.card__price', container);
-		this._button = container.querySelector('.card__button');
+		this._button = container.querySelector('.card__button');;
         if (actions?.onClick) {
             if (this._button) {
                 this._button.addEventListener('click', actions.onClick);
@@ -77,7 +64,12 @@ export class Card extends Component<ICard>  {
     set price(value: number | null) {
         value === null ? this.setText(this._price, 'Бесценно') : this.setText(this._price, `${value.toString()} синапсов`);
     }
-    // set button(value: string) {
-    //     this.setText(this._button, value);
-    // }
+
+    isButtonDisabled(items: string[], id: string, price: number | null) {
+        if (items.includes(id) || price === null) {
+            this.setDisabled(this._button, true);
+        } else {
+            this.setDisabled(this._button, false);
+        }
+    }
 }

@@ -5,18 +5,8 @@ export type CatalogChangeEvent = {
   catalog: IProductItem[]
 };
 
-export class ProductItem extends Model<IProductItem> {
-  description: string;
-  id: string;
-  image: string;
-  title: string;
-  category: string;
-	price: number | null;
-  button: HTMLButtonElement;
-}
-
 export class AppState extends Model<IAppState> {
-  basket: ProductItem[] = [];
+  basket: IProductItem[] = [];
   catalog: IProductItem[];
   order: IOrder = {
     email: '',
@@ -34,21 +24,24 @@ export class AppState extends Model<IAppState> {
   }
 
   setCatalog(items: IProductItem[]) {
-    this.catalog = items.map(item => new ProductItem(item, this.events));
+    this.catalog = items;
     this.emitChanges('items:changed', { catalog: this.catalog });
   }
 
-  setPreview(item: ProductItem) {
+  setPreview(item: IProductItem) {
     this.emitChanges('preview:changed', item);
   }
 
-  addToBasket(item: ProductItem) {
-    this.basket.push(item);
-    this.order.items.push(item.id);
-    this.order.total = this.order.total + item.price;
-    this.emitChanges('basket:changed');
+  addToBasket(item: IProductItem ) {
+
+    if (!this.checkProduct(item.id)) {
+      this.basket.push(item);
+      this.order.items.push(item.id);
+      this.order.total = this.order.total + item.price;
+      this.emitChanges('basket:changed');
+    }
   }
-  removeFromBusket(item: ProductItem) {
+  removeFromBusket(item: IProductItem) {
     this.basket = this.basket.filter((element) => element != item);
     this.order.items = this.order.items.filter((id: string) => item.id !== id);
     this.order.total = this.order.total - item.price;
@@ -68,6 +61,10 @@ export class AppState extends Model<IAppState> {
     this.order.phone = '';
     this.order.total = 0;
   }
+
+  checkProduct(id: string) {
+		return !!this.basket.find((item) => item.id === id);
+	}
   
   setContactField(field: keyof IOrderForm, value: string) {
 		this.order[field] = value;

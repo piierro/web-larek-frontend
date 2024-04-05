@@ -2,13 +2,7 @@ import { Component } from "../base/Component";
 import { EventEmitter } from "../base/events";
 import { createElement, ensureElement } from '../../utils/utils';
 
-interface IBasketView {
-    items: HTMLElement[];
-    total: number;
-    selected: string[];
-}
-
-export class Basket extends Component<IBasketView> {
+export class Basket extends Component {
     protected _list: HTMLElement;
     protected _total: HTMLElement;
     protected _button: HTMLElement;

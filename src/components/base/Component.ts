@@ -1,7 +1,8 @@
-import { IEvents } from './events';
+import {IModalData} from '../../types';
 
-export abstract class Component<T> {
+export abstract class Component {
     protected constructor(protected readonly container: HTMLElement) {
+
     }
 
     // Переключить класс
@@ -50,7 +51,7 @@ export abstract class Component<T> {
 
 
     // Вернуть корневой DOM-элемент
-    render(data?: Partial<T>): HTMLElement {
+    render(data: Record<string, string | number | boolean | string[] | any>): HTMLElement {
         Object.assign(this as object, data ?? {});
         return this.container;
     }

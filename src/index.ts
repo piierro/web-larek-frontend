@@ -4,10 +4,10 @@ import { ProductAPI } from './components/ProductApi';
 import { API_URL, CDN_URL } from './utils/constants';
 import { EventEmitter } from './components/base/events';
 import { Model } from './components/base/Model';
-import { IOrderForm } from './types';
+import { IOrderForm, IProductItem  } from './types';
 import { cloneTemplate, ensureElement } from './utils/utils';
 import { Page } from './components/Page';
-import { AppState, ProductItem, CatalogChangeEvent } from "./components/AppData";
+import { AppState, CatalogChangeEvent } from "./components/AppData";
 import { Card } from "./components/Card";
 import { Modal } from "./components/common/Modal";
 import { Success } from "./components/common/Success";
@@ -37,6 +37,7 @@ const modal = new Modal(ensureElement<HTMLElement>('#modal-container'), events);
 const basket = new Basket(cloneTemplate(basketTemplate), events)
 const order = new Order(cloneTemplate(orderTemplate), events);
 const contacts = new Contacts(cloneTemplate(contactTemplate), events);
+const card = new Card(cloneTemplate(cardCatalogTemplate))
 
 // РАБОТА С КАРТОЧКАМИ
 events.on<CatalogChangeEvent>('items:changed', () => {
@@ -53,21 +54,22 @@ events.on<CatalogChangeEvent>('items:changed', () => {
 });
 });
 
-events.on('card:select', (item: ProductItem) => {
+events.on('card:select', (item: IProductItem) => {
 	appData.setPreview(item);
 });
 
-events.on('preview:changed', (item: ProductItem) => {
+events.on('preview:changed', (item: IProductItem) => {
 	const card = new Card(cloneTemplate(cardPreviewTemplate), {
 		onClick: () => events.emit('card:add', item),
 	});
+	card.isButtonDisabled(appData.order.items, item.id, item.price);
 	modal.render({
 	content: card.render({
 		title: item.title,
 		image: item.image,
 		price: item.price,
 		category: item.category,
-		description: item.description
+		description: item.description,
 		}),
 	});
 });
@@ -99,12 +101,12 @@ events.on('basket:changed', () => {
     basket.total = appData.getTotal();
 });
 
-events.on('card:add', (item: ProductItem) => {
+events.on('card:add', (item: IProductItem) => {
 	appData.addToBasket(item);
 	modal.close();
 });
 
-events.on('card:remove', (item: ProductItem) => {
+events.on('card:remove', (item: IProductItem) => {
 	appData.removeFromBusket(item);
 	events.emit('basket:open');
 });

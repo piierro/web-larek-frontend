@@ -5,14 +5,14 @@ export interface IProductItem {
 	title: string;
 	category: string;
 	price: number | null;
+	button: HTMLButtonElement;
 }
 
 export type IBasketItem = Pick<IProductItem , 'id' | 'title' | 'price'>;
 
 export interface IAppState {
-	catalog: IProductItem;
+	catalog: IProductItem[];
 	basket: string[];
-	preview: string | null;
 	order: IOrder | null;
 }
 export interface IOrderForm {
@@ -36,3 +36,21 @@ export interface IOrderResult {
 // }
   
 export type FormErrors = Partial<Record<keyof IOrder, string>>;
+
+export interface IModalData {
+    content: HTMLElement;
+}
+
+export interface IFormState {
+    valid: boolean;
+    errors: string[];
+}
+
+export interface ICardActions {
+    onClick: (event: MouseEvent) => void;
+}
+
+export interface ISuccessActions {
+    onClick: () => void;
+}
+

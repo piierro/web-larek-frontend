@@ -1,8 +1,5 @@
-import {IModalData} from '../../types';
-
-export abstract class Component {
+export abstract class Component<T>  {
     protected constructor(protected readonly container: HTMLElement) {
-
     }
 
     // Переключить класс
@@ -51,9 +48,11 @@ export abstract class Component {
 
 
     // Вернуть корневой DOM-элемент
-    render(data: Record<string, string | number | boolean | string[] | any>): HTMLElement {
-        Object.assign(this as object, data ?? {});
-        return this.container;
-    }
+    render(data?: Partial<T>): HTMLElement { 
 
+        Object.assign(this as object, data ?? {}); 
+
+        return this.container; 
+
+    } 
 }

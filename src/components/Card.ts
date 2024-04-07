@@ -11,6 +11,7 @@ export interface ICard{
 	category: string; 
 	price: number; 
 	button: HTMLButtonElement; 
+    index: number;
 } 
 export class Card extends Component<ICard>  {
     protected _title: HTMLElement;
@@ -19,6 +20,7 @@ export class Card extends Component<ICard>  {
     protected _button?: HTMLButtonElement;
     protected _category: HTMLElement;
     protected _price: HTMLElement;
+    protected _index: HTMLElement;
 
     constructor(container: HTMLElement, actions?: ICardActions) {
         super(container);
@@ -28,7 +30,8 @@ export class Card extends Component<ICard>  {
 		this._image = container.querySelector('.card__image');
 		this._category = container.querySelector('.card__category');
 		this._price = ensureElement<HTMLElement>('.card__price', container);
-		this._button = container.querySelector('.card__button');;
+		this._button = container.querySelector('.card__button');
+        this._index = container.querySelector('.basket__item-index');
         if (actions?.onClick) {
             if (this._button) {
                 this._button.addEventListener('click', actions.onClick);
@@ -83,4 +86,8 @@ export class Card extends Component<ICard>  {
             this.setDisabled(this._button, false);
         }
     }
+
+    set index(value: number) {
+		this.setText(this._index, value);
+	}
 }

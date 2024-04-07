@@ -85,7 +85,7 @@ events.on('basket:open', () => {
 });
 
 events.on('basket:changed', () => {
-	basket.items = appData.basket.map((item) => {
+	basket.items = appData.basket.map((item, index) => {
 	const card = new Card(cloneTemplate(cardBasketModal), {
 	 onClick: () => {
 		appData.removeFromBusket(item);
@@ -95,6 +95,7 @@ events.on('basket:changed', () => {
 }); return card.render({
 		title: item.title,
 		price: item.price,
+		index: index + 1,
 	});
 });
 	page.counter = appData.basket.length;
@@ -170,17 +171,16 @@ events.on('contacts:submit', () => {
             const success = new Success(cloneTemplate(successTemplate), {
                 onClick: () => {
                     modal.close();
-                    appData.clearBasket();
-					appData.clearOrder();
-					page.counter = appData.basket.length;
                 }
             });
-
             modal.render({
                 content: success.render({
 					total: appData.getTotal()
 				})
             });
+				appData.clearBasket();
+				appData.clearOrder();
+				page.counter = appData.basket.length;
         })
         .catch(err => {
             console.error(err);

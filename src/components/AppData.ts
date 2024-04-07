@@ -33,7 +33,6 @@ export class AppState extends Model<IAppState> {
   }
 
   addToBasket(item: IProductItem ) {
-
     if (!this.checkProduct(item.id)) {
       this.basket.push(item);
       this.order.items.push(item.id);

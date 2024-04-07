@@ -31,9 +31,6 @@ export interface IOrderResult {
 	id: string;
     total: number;
 }
-// export interface IBasketData {
-// 	basket: IProductItem[];
-// }
-  
+
 export type FormErrors = Partial<Record<keyof IOrder, string>>;
 
